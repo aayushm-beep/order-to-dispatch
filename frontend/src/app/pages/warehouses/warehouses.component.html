@@ -1,0 +1,75 @@
+<div class="warehouses-page">
+  <div class="header">
+    <h2>Warehouse Network</h2>
+    <button mat-stroked-button color="primary" (click)="refresh()">Refresh</button>
+  </div>
+
+  <div class="summary-grid">
+    <mat-card class="summary-card" *ngFor="let region of regionSummary()">
+      <h3>{{ region.region }} Region</h3>
+      <p>{{ region.sites }} sites</p>
+      <div class="progress">
+        <div class="progress-bar" [style.width.%]="region.utilization * 100"></div>
+      </div>
+      <div class="stats">
+        <span>Capacity: {{ region.capacity | number }}</span>
+        <span>Inventory: {{ region.current | number }}</span>
+        <span>Utilization: {{ region.utilization * 100 | number : '1.0-0' }}%</span>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading(); else loadingTemplate">
+    <table mat-table [dataSource]="warehouses()" class="warehouses-table">
+      <ng-container matColumnDef="warehouse_id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.warehouse_id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Warehouse</th>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef>Region</th>
+        <td mat-cell *matCellDef="let row">{{ row.region }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="capacity">
+        <th mat-header-cell *matHeaderCellDef>Capacity</th>
+        <td mat-cell *matCellDef="let row">{{ row.capacity | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="current_units">
+        <th mat-header-cell *matHeaderCellDef>Inventory</th>
+        <td mat-cell *matCellDef="let row">{{ row.current_units | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="utilization">
+        <th mat-header-cell *matHeaderCellDef>Utilization</th>
+        <td mat-cell *matCellDef="let row">{{ row.utilization * 100 | number : '1.0-0' }}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="active_orders">
+        <th mat-header-cell *matHeaderCellDef>Active Orders</th>
+        <td mat-cell *matCellDef="let row">{{ row.active_orders }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="open_positions">
+        <th mat-header-cell *matHeaderCellDef>Open Roles</th>
+        <td mat-cell *matCellDef="let row">{{ row.open_positions }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading-state">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <span>Compiling network visibility...</span>
+  </div>
+</ng-template>

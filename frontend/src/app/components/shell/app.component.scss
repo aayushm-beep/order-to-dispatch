@@ -1,0 +1,54 @@
+.layout-container {
+  height: 100vh;
+}
+
+.layout-sidenav {
+  width: 260px;
+  background: var(--surface-elevated);
+  color: var(--on-surface);
+  padding-top: 1rem;
+
+  .logo {
+    font-weight: 700;
+    padding: 0 1.5rem 1.5rem;
+    text-transform: uppercase;
+  }
+
+  a.active {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.layout-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  color: var(--on-surface);
+
+  .toolbar-title {
+    margin-left: 1rem;
+    font-weight: 600;
+  }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.layout-content {
+  background: var(--background);
+  color: var(--on-surface);
+}
+
+.page-container {
+  padding: 1.5rem;
+  min-height: calc(100vh - 64px);
+  overflow: auto;
+}
+
+@media (max-width: 960px) {
+  .layout-sidenav {
+    width: 220px;
+  }
+}
